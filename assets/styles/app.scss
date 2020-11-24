@@ -1,12 +1,3 @@
-// assets/styles/global.scss
-
-// customize some Bootstrap variables
-$primary: darken(#428bca, 20%);
-
-// the ~ allows you to reference things in node_modules
-@import "~bootstrap/scss/bootstrap";
-
-
 body {
     background-color: lightgray;
 }
@@ -18,6 +9,8 @@ $theme-colors: (
         "light": #ecc8ef,
         "dark": #42095e
 );
+
+@import "~bootstrap/scss/bootstrap";
 
 .navLink {
     color: theme-color(secondary);
