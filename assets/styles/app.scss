@@ -19,3 +19,29 @@ $theme-colors: (
 .navbar h2 {
     color: theme-color(light);
 }
+
+.program {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.programContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    padding: 10px;
+    margin: 10px;
+    img {
+        max-height: 250px;
+        margin: 5px;
+    }
+    p {
+        text-align: justify;
+        text-align-last: center;
+    }
+}

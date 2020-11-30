@@ -1,0 +1,18 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}{{ program.title }}{% endblock %}
+
+{% block body %}
+    <h1>Toutes les séries de la table program : </h1>
+    <section class="program">
+            <div class="programContainer">
+                <h2>{{ program.title }}</h2>
+                <img src="{{ program.poster }}" alt="{{ program.title }} poster">
+                <p>{{ program.summary }}</p>
+                <p>Catégorie : {{ program.category.name }}</p>
+            </div>
+    </section>
+    <a href="{{ path('program_index') }}">
+        Retour à la liste des programmes
+    </a>
+{% endblock %}
