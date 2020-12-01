@@ -34,14 +34,16 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="show")
-     * @param int $id
+     * @param Program $program
      * @return Response
      */
-    public function show(int $id): Response
+    public function show(Program $program): Response
     {
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findOneBy(['id' => $id]);
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'No program with this id found in program\'s table.'
+            );
+        }
 
         $seasons = $this->getDoctrine()
             ->getRepository(Season::class)
@@ -50,11 +52,6 @@ class ProgramController extends AbstractController
                 ['id' => 'ASC']
             );
 
-        if (!$program) {
-            throw $this->createNotFoundException(
-                'No program with id : '.$id.' found in program\'s table.'
-            );
-        }
         return $this->render('program/show.html.twig', [
             'program' => $program,
             'seasons'=> $seasons,
@@ -62,20 +59,13 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{programId}/seasons/{seasonId}", name="season_show")
-     * @param int $programId
-     * @param int $seasonId
+     * @Route("/{program}/seasons/{season}", name="season_show")
+     * @param Program $program
+     * @param Season $season
+     * @return Response
      */
-    public function showSeason(int $programId, int $seasonId)
+    public function showSeason(Program $program, Season $season): Response
     {
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->find($programId);
-
-        $season = $this->getDoctrine()
-            ->getRepository(Season::class)
-            ->find($seasonId);
-
         $episodes = $this->getDoctrine()
             ->getRepository(Episode::class)
             ->findBy(
@@ -87,6 +77,22 @@ class ProgramController extends AbstractController
             'program' => $program,
             'season'=> $season,
             'episodes' => $episodes,
+        ]);
+    }
+
+    /**
+     * @Route("/{program}/seasons/{season}/episodes/{episode}", name="episode_show")
+     * @param Program $program
+     * @param Season $season
+     * @param Episode $episode
+     * @return Response
+     */
+    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    {
+        return $this->render('program/episode_show.html.twig', [
+            'program'=>$program,
+            'season'=>$season,
+            'episode'=>$episode,
         ]);
     }
 }
