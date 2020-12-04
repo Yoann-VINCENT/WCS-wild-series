@@ -11,3 +11,7 @@ https://www.loom.com/share/07e4412192d042588bbe0c61df8da9fc
 ##Quest 11 :
 
 https://www.loom.com/share/3190c2af79bb483eaefbee8c9f252984
+
+##Quest 12 :
+
+https://www.loom.com/share/dc582f95e78143db9d062172e515f2a7

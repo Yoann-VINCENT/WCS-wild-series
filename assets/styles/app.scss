@@ -49,3 +49,9 @@ $theme-colors: (
         margin-bottom: 25px;
     }
 }
+
+.navPushRight {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+}
