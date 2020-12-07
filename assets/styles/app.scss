@@ -55,3 +55,32 @@ $theme-colors: (
     display: flex;
     flex-direction: column;
 }
+
+.formContainer {
+    width: 90%;
+    margin: 30px;
+}
+
+.btn {
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    color: theme-color(dark);
+    background-color: theme-color(primary);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px theme-color(dark);
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: theme-color(secondary);
+    color: theme-color(light);
+}
+
+.btn:active {
+    background-color: theme-color(secondary);
+    box-shadow: 0 5px theme-color(dark);
+    transform: translateY(4px);
+}
