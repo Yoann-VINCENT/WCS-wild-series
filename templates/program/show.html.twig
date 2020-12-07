@@ -25,6 +25,10 @@
                 </ul>
             </div>
     </section>
+    <a href="{{ path('program_edit', {id: program.id}) }}">
+        Edit
+    </a>
+    <br>
     <a href="{{ path('program_index') }}">
         Retour à la liste des programmes
     </a>
@@ -32,4 +36,5 @@
     <a href="{{ path('season_new') }}">
         Add season
     </a>
+    {{ include('program/_delete_form.html.twig') }}
 {% endblock %}

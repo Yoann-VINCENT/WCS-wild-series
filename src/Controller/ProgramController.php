@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Episode;
 use App\Entity\Season;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,10 +40,11 @@ class ProgramController extends AbstractController
      * Display the form or deal with it
      *
      * @Route("/new", name="new")
+     * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
      */
-    public function new(Request $request) : Response
+    public function form(EntityManagerInterface $entityManager, Request $request) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -55,6 +57,28 @@ class ProgramController extends AbstractController
         }
         return $this->render('program/new.html.twig', [
             "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @route("/{id}/edit", name="edit", requirements={"id"="^\d+$"}, methods={"GET", "POST"})
+     * @param Program $program
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function edit(Program $program, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($program);
+            $entityManager->flush();
+            return $this->redirectToRoute("program_show", ["id" => $program->getId()]);
+        }
+        return $this->render('program/new.html.twig', [
+            "form" => $form->createView(),
         ]);
     }
 
@@ -120,5 +144,22 @@ class ProgramController extends AbstractController
             'season'=>$season,
             'episode'=>$episode,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Program $program
+     * @return Response
+     */
+    public function delete(Request $request, Program $program): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($program);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_index');
     }
 }
