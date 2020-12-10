@@ -8,7 +8,7 @@
         {% for actor in actors %}
             <div class="programContainer">
                 <h2>{{ loop.index }} / {{ actor.name }}</h2>
-                <a href="{{ path("actor_show", { id: actor.id }) }}">Show !</a>
+                <a href="{{ path("actor_show", { slug: actor.slug }) }}">Show !</a>
             </div>
         {% else %}
             <p>Aucun acteur trouvé.</p>

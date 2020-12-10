@@ -10,7 +10,7 @@
                 <h2>{{ program.id }} / {{ program.title }}</h2>
                 <img src="{{ program.poster }}" alt="{{ program.title }} poster">
                 <p>{{ program.summary }}</p>
-                <a href="{{ path("program_show", { id: program.id }) }}">Show !</a>
+                <a href="{{ path("program_show", { slug: program.slug }) }}">Show !</a>
             </div>
         {% else %}
             <p>Aucune série trouvée.</p>

@@ -9,7 +9,7 @@
             <h2>{{ actor.name }}</h2>
             <ul>
                 {% for program in actor.programs %}
-                    <li><a href="{{ path('program_show', {id: program.id}) }}">Dans : {{ program.title }}</a></li>
+                    <li><a href="{{ path('program_show', {slug: program.slug}) }}">Dans : {{ program.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>

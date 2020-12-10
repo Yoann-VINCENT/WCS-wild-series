@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Episode;
 use App\Entity\Season;
+use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,15 +43,17 @@ class ProgramController extends AbstractController
      * @Route("/new", name="new")
      * @param EntityManagerInterface $entityManager
      * @param Request $request
+     * @param Slugify $slugify
      * @return Response
      */
-    public function form(EntityManagerInterface $entityManager, Request $request) : Response
+    public function form(EntityManagerInterface $entityManager, Request $request, Slugify $slugify) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
             return $this->redirectToRoute('program_index');
@@ -61,21 +64,24 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @route("/{id}/edit", name="edit", requirements={"id"="^\d+$"}, methods={"GET", "POST"})
+     * @route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      * @param Program $program
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param Slugify $slugify
      * @return Response
      */
-    public function edit(Program $program, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(Program $program, Request $request, EntityManagerInterface $entityManager, Slugify $slugify): Response
     {
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
-            return $this->redirectToRoute("program_show", ["id" => $program->getId()]);
+            return $this->redirectToRoute("program_show", ["slug" => $program->getSlug()]);
         }
         return $this->render('program/new.html.twig', [
             "form" => $form->createView(),
@@ -83,7 +89,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="show")
+     * @Route("/{slug}", methods={"GET"}, name="show")
      * @param Program $program
      * @return Response
      */
@@ -109,7 +115,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{program}/seasons/{season}", name="season_show")
+     * @Route("/{slug}/seasons/{number}", name="season_show")
      * @param Program $program
      * @param Season $season
      * @return Response
@@ -131,7 +137,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{program}/seasons/{season}/episodes/{episode}", name="episode_show")
+     * @Route("/{slug}/seasons/{number}/episodes/{episode}", name="episode_show")
      * @param Program $program
      * @param Season $season
      * @param Episode $episode

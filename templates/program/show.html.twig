@@ -12,20 +12,20 @@
                 <p>Catégorie : {{ program.category.name }}</p>
                 <ul>
                 {% for season in seasons %}
-                    <li><a href="{{ path('program_season_show', {program: program.id, season:season.id}) }}">Season : {{ season.number }}</a></li>
+                    <li><a href="{{ path('program_season_show', {slug: program.slug, number:season.number}) }}">Season : {{ season.number }}</a></li>
                 {% endfor %}
                 </ul>
                 <strong>Acteurs :</strong>
                 <ul>
                     {% for actor in program.actors %}
-                        <li><a href="{{ path('actor_show', {id: actor.id}) }}">{{ actor.name }}</a></li>
+                        <li><a href="{{ path('actor_show', {slug: actor.slug}) }}">{{ actor.name }}</a></li>
                     {% else %}
                         <li>Aucun acteur pour cette série</li>
                     {% endfor %}
                 </ul>
             </div>
     </section>
-    <a href="{{ path('program_edit', {id: program.id}) }}">
+    <a href="{{ path('program_edit', {slug: program.slug}) }}">
         Edit
     </a>
     <br>

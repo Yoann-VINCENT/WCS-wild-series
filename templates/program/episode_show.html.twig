@@ -11,7 +11,7 @@
         </div>
     </section>
 
-    <a href="{{ path('program_season_show', {program: program.id, season: season.id} )}}">
+    <a href="{{ path('program_season_show', {slug: program.slug, number: season.number} )}}">
         Retour à la liste des épisodes
     </a>
 {% endblock %}
