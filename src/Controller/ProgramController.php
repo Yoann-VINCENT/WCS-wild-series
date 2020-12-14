@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Episode;
 use App\Entity\Season;
+use App\Form\EpisodeType;
 use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -148,7 +150,9 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/seasons/{number}/episodes/{episode}", name="episode_show")
+     * @Route("/{slug}/seasons/{season_number}/episodes/{episode_number}", name="episode_show")
+     * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"season_number": "number"}})
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode_number": "number"}})
      * @param Program $program
      * @param Season $season
      * @param Episode $episode

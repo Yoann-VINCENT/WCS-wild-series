@@ -50,6 +50,11 @@ class Season
         $this->episodes = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getProgram() . ' - Season : ' . $this->getNumber();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
