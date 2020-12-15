@@ -9,6 +9,19 @@
             <h2>Saison {{ season.number}}<br>Episode {{ episode.number }}</h2>
             <p>{{ episode.synopsis }}</p>
         </div>
+        <div>
+            <h2>Comments</h2>
+            {% for comment in episode.comments %}
+            <div>
+                <h3>{{ comment.author.email }}</h3>
+                <p>{{ comment.comment }}</p>
+                <p>Rate : {{ comment.rate }}</p>
+            </div>
+            {% endfor %}
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}">Add a comment !</a>
+            {% endif %}
+        </div>
     </section>
 
     <a href="{{ path('program_season_show', {slug: program.slug, number: season.number} )}}">

@@ -56,6 +56,11 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             'category' => 'category_2',
             'poster' => "https://images-na.ssl-images-amazon.com/images/I/71wo6lXoEwL._AC_SX679_.jpg",
         ],
+        'The Legend of Korra' => [
+            'summary' => 'Korra est un maître de l\'eau venant du Pôle Sud, elle est également la fille du chef de la tribu du Pole du Sud, qui a un fort caractère. En tant qu\'Avatar, elle doit apprendre à maîtriser les quatre éléments. Les maîtrises de l\'eau, de la terre et du feu et l\'air lui ont été enseignées pendant toute son enfance au pôle sud par les maîtres du Lotus Blanc, cependant elle n\'arrive pas à contrôler à la perfection sa maitrise de l\'air. Au début de la série, elle part vivre à la Cité de la République pour apprendre la maîtrise de l\'air auprès de Tenzin, le dernier maître de l\'air. La Cité de la République a été créée par Aang et Zuko après cent ans de guerre et abrite des gens de toutes les nations.',
+            'category' => 'category_2',
+            'poster' => 'https://i.pinimg.com/originals/bf/d9/ca/bfd9caa18bbbe8d69856e39371d74869.png'
+        ]
     ];
 
     /**

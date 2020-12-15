@@ -28,8 +28,8 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker  =  Faker\Factory::create('en_US');
-        for ($i = 0; $i < 90; $i++) {
-            $randNB = rand(0,8);
+        for ($i = 0; $i < 100; $i++) {
+            $randNB = rand(0,9);
             $actor = new Actor();
             $actor->setName($faker->name)
                 ->addProgram($this->getReference('program_' . $randNB, $actor))

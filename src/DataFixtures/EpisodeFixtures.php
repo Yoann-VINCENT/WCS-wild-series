@@ -28,7 +28,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker  =  Faker\Factory::create('en_US');
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             for ($j = 1; $j < 11; $j++) {
                 for ($k = 1; $k < 21; $k++) {
                     $episode = new Episode();
