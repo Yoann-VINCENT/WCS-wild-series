@@ -39,3 +39,7 @@ https://www.loom.com/share/a991b92010c343d0ba96cb89fed5df34
 ##Quest 18 :
 
 https://www.loom.com/share/cb844b391d9145d8ad89e20aed985c7b
+
+##Quest 19 :
+
+https://www.loom.com/share/cf8d02d2b94b4d06acaaab2a6a6b72dc
