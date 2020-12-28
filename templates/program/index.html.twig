@@ -11,7 +11,11 @@
             <img src="{{ program.poster }}" alt="{{ program.title }} poster">
             <p>{{ program.summary }}</p>
             <a href="{{ path("program_show", { slug: program.slug }) }}">Show !</a>
+            {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                <a href="{{ path('program_edit', { 'slug': program.slug} ) }}">Edit</a>
+            {%endif%}
         </div>
+
     {% else %}
         <p>Aucune série trouvée.</p>
     {% endfor %}

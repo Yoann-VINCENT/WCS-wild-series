@@ -5,8 +5,10 @@
     <a class="nav-link navLink" href="{{ path('category_index') }}">Categories</a>
     <a class="nav-link navLink" href="{{ path('actor_index') }}">Actors</a>
     <div class="navPushRight">
+        {% if app.user and is_granted("ROLE_ADMIN") %}
         <a href="{{ path('season_index') }}">Admin - seasons</a>
         <a href="{{ path('episode_index') }}">Admin - episodes</a>
+        {% endif %}
     </div>
     <div class="navPushRight">
         <a href="#">{{ app.user.email ?? 'Anonymous user' }}</a>

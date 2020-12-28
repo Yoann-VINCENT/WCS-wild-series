@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Program;
 use App\Form\ProgramType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class ProgramController
@@ -63,7 +64,10 @@ class ProgramController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate($program->getTitle());
-            $program->setSlug($slug);
+            $user = $this->getUser();
+            /** @var User $user */
+            $program->setSlug($slug)
+                ->setOwner($user);
             $entityManager->persist($program);
             $entityManager->flush();
             $email = (new Email())
@@ -89,6 +93,9 @@ class ProgramController extends AbstractController
      */
     public function edit(Program $program, Request $request, EntityManagerInterface $entityManager, Slugify $slugify): Response
     {
+        if (!($this->getUser() == $program->getOwner())) {
+            throw new AccessDeniedException('Only the owner can edit the program!');
+        }
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 

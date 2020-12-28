@@ -19,16 +19,16 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $faker  =  Faker\Factory::create('en_US');
-        for ($i = 0; $i < 30; $i++) {
-            $user = new User();
-            $user->setEmail($faker->email)
-                ->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                $faker->password
-            ));
-            $manager->persist($user);
-        }
+//        $faker  =  Faker\Factory::create('en_US');
+//        for ($i = 0; $i < 30; $i++) {
+//            $user = new User();
+//            $user->setEmail($faker->email)
+//                ->setPassword($this->passwordEncoder->encodePassword(
+//                $user,
+//                $faker->password
+//            ));
+//            $manager->persist($user);
+//        }
 
         $contributor = new User();
         $contributor->setEmail('contributor@monsite.com');
@@ -47,7 +47,7 @@ class UserFixtures extends Fixture
             'adminpassword'
         ));
         $manager->persist($admin);
-
+        $this->addReference('admin', $admin);
         $manager->flush();
     }
 }
