@@ -153,9 +153,9 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/seasons/{season_number}/episodes/{episode_number}", name="episode_show")
+     * @Route("/{slug}/seasons/{season_number}/episodes/{episode_id}", name="episode_show")
      * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"season_number": "number"}})
-     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode_number": "number"}})
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode_id": "id"}})
      * @param Program $program
      * @param Season $season
      * @param Episode $episode
