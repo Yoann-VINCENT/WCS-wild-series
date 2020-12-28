@@ -179,16 +179,10 @@ class ProgramController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
         }
-
-        $comments = $this->getDoctrine()->getRepository(Comment::class)
-            ->findBy(['episode' => $episode]);
-
         return $this->render('program/episode_show.html.twig', [
             'program'=>$program,
             'season'=>$season,
             'episode'=>$episode,
-            'comment' => $comment,
-            'comments' => $comments,
             'form' => $form->createView(),
         ]);
     }
