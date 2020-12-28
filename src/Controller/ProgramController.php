@@ -2,8 +2,11 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Season;
+use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\EpisodeType;
 use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -156,14 +159,37 @@ class ProgramController extends AbstractController
      * @param Program $program
      * @param Season $season
      * @param Episode $episode
+     * @param Request $request
      * @return Response
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Program $program, Season $season, Episode $episode, Request $request): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setEpisode($episode);
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            $user = $this->getUser();
+
+            /** @var User $user */
+            $comment->setAuthor($user);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
+        $comments = $this->getDoctrine()->getRepository(Comment::class)
+            ->findBy(['episode' => $episode]);
+
         return $this->render('program/episode_show.html.twig', [
             'program'=>$program,
             'season'=>$season,
             'episode'=>$episode,
+            'comment' => $comment,
+            'comments' => $comments,
+            'form' => $form->createView(),
         ]);
     }
 

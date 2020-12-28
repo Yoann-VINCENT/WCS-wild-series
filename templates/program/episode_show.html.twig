@@ -13,13 +13,17 @@
             <h2>Comments</h2>
             {% for comment in episode.comments %}
             <div>
-                <h3>{{ comment.author.email }}</h3>
+                <h4>{{ comment.author.email }}</h4>
                 <p>{{ comment.comment }}</p>
                 <p>Rate : {{ comment.rate }}</p>
             </div>
             {% endfor %}
             {% if app.user %}
-                <a href="{{ path('app_logout') }}">Add a comment !</a>
+                <h3>Add a comment !</h3>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }}
             {% endif %}
         </div>
     </section>

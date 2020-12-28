@@ -9,8 +9,8 @@
         <a href="{{ path('episode_index') }}">Admin - episodes</a>
     </div>
     <div class="navPushRight">
+        <a href="#">{{ app.user.email ?? 'Anonymous user' }}</a>
         {% if app.user %}
-            <a href="#">{{ app.user.email }}</a>
             <a href="{{ path('app_logout') }}"> Se déconnecter</a>
         {% else %}
             <a href="{{ path('app_login') }}"> Se connecter</a>
