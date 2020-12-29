@@ -41,4 +41,8 @@ security:
         - { path: ^/programs/[ a-z- ]+/edit, roles: ROLE_CONTRIBUTOR }
         - { path: ^/season, roles: ROLE_ADMIN }
         - { path: ^/episode, roles: ROLE_ADMIN }
+        - { path: ^/my-profile, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_ADMIN }
+
+
 

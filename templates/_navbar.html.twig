@@ -11,7 +11,19 @@
         {% endif %}
     </div>
     <div class="navPushRight">
-        <a href="#">{{ app.user.email ?? 'Anonymous user' }}</a>
+        <a href="
+        {% if app.user %}
+            {{ path('app_my-profile') }}
+        {% else %}
+            #
+        {% endif %}"
+         >
+            {% if app.user and app.user.pseudo %}
+            {{ app.user.pseudo }}
+            {% else %}
+            {{ app.user.email ?? 'Anonymous user' }}
+            {% endif %}
+        </a>
         {% if app.user %}
             <a href="{{ path('app_logout') }}"> Se déconnecter</a>
         {% else %}
