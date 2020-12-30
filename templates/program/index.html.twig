@@ -4,6 +4,13 @@
 
 {% block body %}
     <h1>Toutes les séries de la table program : </h1>
+    <div class="container">
+        <h2>Search for a program :</h2>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">Search</button>
+        {{ form_end(form) }}
+    </div>
     <section class="program">
     {% for program in programs %}
         <div class="programContainer">
