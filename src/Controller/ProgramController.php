@@ -68,7 +68,7 @@ class ProgramController extends AbstractController
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function form(EntityManagerInterface $entityManager, Request $request, Slugify $slugify, MailerInterface $mailer) : Response
+    public function new(EntityManagerInterface $entityManager, Request $request, Slugify $slugify, MailerInterface $mailer) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -87,6 +87,7 @@ class ProgramController extends AbstractController
                 ->subject('Une nouvelle série vient d\'être publiée !')
                 ->html($this->renderView('program/newProgramEmail.html.twig', ['program' => $program]));
             $mailer->send($email);
+            $this->addFlash('success', 'The new program has been created');
             return $this->redirectToRoute('program_index');
         }
         return $this->render('program/new.html.twig', [
@@ -115,6 +116,7 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
+            $this->addFlash('success', 'The program has been edited');
             return $this->redirectToRoute("program_show", ["slug" => $program->getSlug()]);
         }
         return $this->render('program/new.html.twig', [
@@ -217,6 +219,7 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($program);
             $entityManager->flush();
+            $this->addFlash('danger', 'The program has been deleted');
         }
 
         return $this->redirectToRoute('program_index');
