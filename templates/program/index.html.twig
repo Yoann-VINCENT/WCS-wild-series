@@ -18,9 +18,12 @@
             <img src="{{ program.poster }}" alt="{{ program.title }} poster">
             <p>{{ program.summary }}</p>
             <a href="{{ path("program_show", { slug: program.slug }) }}">Show !</a>
-            {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
-                <a href="{{ path('program_edit', { 'slug': program.slug} ) }}">Edit</a>
-            {%endif%}
+            {% if app.user %}
+                    <div class="watchlist {{ app.user.isInWatchlist(program) ? 'fas' : 'far' }}" data-text="{{path('program_watchlist', {'id': program.id})}}"></div>
+                {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                    <a href="{{ path('program_edit', { 'slug': program.slug} ) }}">Edit</a>
+                {%endif%}
+            {% endif %}
         </div>
 
     {% else %}
@@ -34,4 +37,8 @@
     <a href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('watchlist') }}
 {% endblock %}

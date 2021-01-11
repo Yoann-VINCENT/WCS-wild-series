@@ -11,9 +11,11 @@ use App\Form\EpisodeType;
 use App\Form\SearchProgramFormType;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -204,6 +206,28 @@ class ProgramController extends AbstractController
             'season'=>$season,
             'episode'=>$episode,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/watchlist", name="watchlist")
+     * @param Program $program
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function addToWatchlist(Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        if ($user->getWatchlist()->contains($program)) {
+            $user->removeWatchlist($program);
+        } else {
+            $user->addWatchlist($program);
+        }
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->json([
+            'isInWatchlist' => $user->isInWatchlist($program)
         ]);
     }
 

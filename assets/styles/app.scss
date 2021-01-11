@@ -84,3 +84,17 @@ $theme-colors: (
     box-shadow: 0 5px theme-color(dark);
     transform: translateY(4px);
 }
+
+.watchlist {
+    width: 50px;
+    height: 50px;
+    background: center / contain no-repeat;
+}
+
+.far {
+    background-image: url("/build/far.png");
+}
+
+.fas {
+    background-image: url("/build/fas.png");
+}
